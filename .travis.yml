@@ -18,8 +18,7 @@ android:
     - sys-img-x86-android-29
 
 script:
-  - "./gradlew test"
-  - "./gradlew lint"
+ 
   - "./gradlew build"
 
 deploy:
