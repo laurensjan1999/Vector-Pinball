@@ -1,6 +1,35 @@
-language: ruby
-rvm:
-  - 2.3.0.
-  - jruby
+language: android
+dist: trusty
+android:
+  components:
 
-before_install: gem install bundler
+    # gradle build tools
+    - build-tools-29.0.2
+
+    # the SDK version used to compile the project
+    - android-29
+
+    # components
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-x86-android-29
+
+script:
+  - "./gradlew test"
+  - "./gradlew lint"
+  - "./gradlew build"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: AgUQUgARuExa2ZlqDXFiX4TFZtmxKdmeEwJGNoONTjKk1658x7Fg6n57o3H9tTI+XIIG6nruWk1TL4fxmuGWFa67R80iwa8PPyywFFP59OT3dAEPRrSaGOOdy5oiEnZsTsCyN9MQGngSCEOhoPyGxsIoDE+MAVsI5rlrA9q/PCmxL7aumhg7iuyP11bGxbcvMwNhf9aPnvTM/Tag2X/xnbO4vg/D6wXoMquUoM+SGtxSbLphwP3AvXPfJT7DOfjZg5yUpzIgdFHX8Eia+rBDQo5Mol+n2FLU2nUmvMMneYq38gXZz6+ES2p9ubnZ+gdaOYOjv0S43xd8pBNcmeY4lEYVzrlicsrFQKEk1DysjP6jt9BfIbB/Zwg/kv4ZydEKfQXSP6mxkql2AyHBMMhHaeTbI4jlKWP1S7UjM2uoEj57fKQdM+pvVNlQTyEDciSFLObnilxBjf3CurmDzpV/4acZgUnLr4jGnx520OWZ6yepQWcVpH5xTf1N5Y+n6LZE4pFW+56D7V7QxMOFu5iPqnaAXV7XzLmeUKUMtIbKz7eNu39/wELGmJ8EyzVUJ5QMVkSvHUz4ElTig2DtkGQeR/KLvdUoLGWCV/7RDe+52/LTEy+9WwgBXN8+ELrWO01Yb/H4GzqXQ1NVQeT27dPPHKNUgrpk043mPi/zzEcK67g=
+  file_glob: true
+  overwrite: true
+  file: '/home/travis/build/AlexSpelt/Vector-Pinball/app/build/outputs/apk/release/*'
+  on:
+    repo: AlexSpelt/Vector-Pinball
+    tags: true
+  skip_cleanup: true
